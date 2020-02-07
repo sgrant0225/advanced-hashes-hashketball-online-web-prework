@@ -169,17 +169,86 @@ end
 
 
 def player_numbers(team_name)
+  jersey_num = []
   game_hash.map do |place, team|
    if team[:team_name] == team_name
-    team.each do |attribute, data|
+     team.each do |attribute, data|
       if attribute == :players
         data.each do |name|
-          if name == :player_name
-            return name[:number]
-          end
-        end
+            jersey_num << name[:number]
+         end
       end
     end
    end
  end
+ jersey_num
+end  
+
+def player_stats(players_name)
+ hash = {}
+  game_hash.each do |place, team|
+    team.each do |attribute, data|
+      if attribute == :players
+        data.each do |name|
+         if name[:player_name] == players_name
+           hash = name.delete_if do |k, v|
+           k == :player_name
+            end
+          end
+        end
+      end
+    end
+  end
+  hash
+end
+
+
+
+def big_shoe_rebounds
+  game_hash.each do |place, team|
+   team.each do |attribute, data|
+     if attribute == :players
+       data.each do |value|
+         #binding.pry
+         if value[:player_name] == "Mason Plumlee"
+           return value[:rebounds]
+           #binding.pry
+         end
+       end
+     end
+    end
+  end
+end  
+
+
+def most_points_scored
+  game_hash.each do |place, team|
+   team.each do |attribute, data|
+     if attribute == :players
+       data.each do |value|
+         #binding.pry
+         if value[:points] == 33
+           return value[:player_name]
+           #binding.pry
+         end
+       end
+     end
+    end
+  end
+end  
+
+def winning_team
+  game_hash.each do |place, team|
+   team.each do |attribute, data|
+     if attribute == :players
+       data.each do |value|
+         binding.pry
+         if value[:points] == 33
+           return value[:player_name]
+           #binding.pry
+         end
+       end
+     end
+    end
+  end
 end  
